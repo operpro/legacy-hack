@@ -1,6 +1,8 @@
 local player = game.Players.LocalPlayer
 local workspace = game.Workspace
-loadstring("https://raw.githubusercontent.com/operpro/legacy-hack/refs/heads/main/watermark.lua")
+local url = "https://raw.githubusercontent.com/operpro/legacy-hack/refs/heads/main/watermark.lua"
+local scriptCode = game:HttpGet(url)  
+loadstring(scriptCode)()  
 -- Function to create ESP for a model
 local function createESP(model)
     if not model or not model:IsA("Model") then return end
