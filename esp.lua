@@ -27,7 +27,7 @@ local function createGUI()
     
     -- Создаем TextLabel
     local textLabel = Instance.new("TextLabel")
-    textLabel.Text = "legacy hack v0.1"
+    textLabel.Text = "legacy esp v0.1"
     textLabel.Size = UDim2.new(0, 300, 0, 50)
     textLabel.Position = UDim2.new(0.5, -150, 0.5, -570)
     textLabel.BackgroundColor3 = Color3.fromRGB(23, 23, 23)
