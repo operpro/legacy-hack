@@ -1,9 +1,9 @@
--- Объединенный скрипт: GUI (watermark) + ESP для "Артефакт 'Плоть'"
--- Скрипт сделан @fourli
+
+-- Скрипт сделан ds @fourli
 local player = game.Players.LocalPlayer
 local workspace = game.Workspace
 
--- Функция для создания GUI (watermark с переливанием цветов)
+
 local function createGUI()
 -- Отладка
     local playerGui = player:WaitForChild("PlayerGui", 10)  -- Ждем до 10 сек
@@ -12,20 +12,19 @@ local function createGUI()
         return
     end
     
-    -- Удаляем старый GUI, если есть
     local existingGui = playerGui:FindFirstChild("MyScreenGui")
     if existingGui then
         existingGui:Destroy()
   
     end
     
-    -- Создаем ScreenGui
+
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "MyScreenGui"
     screenGui.Parent = playerGui
 
     
-    -- Создаем TextLabel
+
     local textLabel = Instance.new("TextLabel")
     textLabel.Text = "legacy esp v0.1"
     textLabel.Size = UDim2.new(0, 300, 0, 50)
@@ -41,7 +40,7 @@ local function createGUI()
     textLabel.Parent = screenGui
     
     
-    -- Цикл для переливания цветов в отдельном потоке
+
     local running = true
     task.spawn(function()
         while running do
@@ -59,22 +58,21 @@ local function createGUI()
             wait(0.4)
         end
     end)
-    
-    -- Останавливаем цикл при удалении GUI
+
     screenGui.Destroying:Connect(function()
         running = false
         
     end)
 end
 
--- Функция для создания ESP для модели
+
 local function createESP(model)
     if not model or not model:IsA("Model") then return end
     
-    -- Проверяем, есть ли уже ESP
+
     if model:FindFirstChild("ESP_Billboard") then return end
     
-    -- Создаем BillboardGui
+
     local billboard = Instance.new("BillboardGui")
     billboard.Name = "ESP_Billboard"
     billboard.Adornee = model.PrimaryPart or model:FindFirstChildWhichIsA("BasePart")
@@ -82,7 +80,7 @@ local function createESP(model)
     billboard.StudsOffset = Vector3.new(0, 3, 0)
     billboard.AlwaysOnTop = true
     
-    -- Создаем Frame для контура
+
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(1, 0, 1, 0)
     frame.BackgroundTransparency = 0.5
@@ -91,7 +89,7 @@ local function createESP(model)
     frame.BorderColor3 = Color3.fromRGB(255, 255, 255)
     frame.Parent = billboard
     
-    -- Создаем TextLabel для имени
+
     local textLabel = Instance.new("TextLabel")
     textLabel.Size = UDim2.new(1, 0, 0.5, 0)
     textLabel.Position = UDim2.new(0, 0, 0, 0)
@@ -102,12 +100,12 @@ local function createESP(model)
     textLabel.Font = Enum.Font.SourceSansBold
     textLabel.Parent = frame
     
-    -- Привязываем к модели
+
     billboard.Parent = model
 
 end
 
--- Функция для поиска всех моделей с именем
+
 local function findAllModels(name)
     local models = {}
     for _, obj in ipairs(workspace:GetDescendants()) do
@@ -118,7 +116,7 @@ local function findAllModels(name)
     return models
 end
 
--- Инициализация: Создаем GUI и применяем ESP к существующим моделям
+
 
 createGUI()
 local targetName = 'Артефакт "Плоть"'
@@ -128,14 +126,14 @@ for _, model in ipairs(existingModels) do
     createESP(model)
 end
 
--- Пересоздаем GUI при новом персонаже (после смерти)
+
 player.CharacterAdded:Connect(function()
     
     wait(1)
     createGUI()
 end)
 
--- Циклы в отдельных потоках для стабильности
+
 task.spawn(function()
     -- Цикл для проверки GUI (каждые 5 сек)
     while true do
@@ -148,7 +146,7 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    -- Цикл для ESP (каждую секунду)
+
     while true do
         wait(1)
         local allModels = findAllModels(targetName)
