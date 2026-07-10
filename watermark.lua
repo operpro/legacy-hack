@@ -1,29 +1,29 @@
--- Исправленный код с отладкой: GUI пересоздается после смерти
+
 local player = game.Players.LocalPlayer
 
 -- Функция для создания GUI
 local function createGUI()
-    print("Скрипт сделан @fourli")  -- Отладка
+    print("Скрипт сделан ds @fourli") 
     local playerGui = player:WaitForChild("PlayerGui", 10)  -- Ждем до 10 сек
     if not playerGui then
         warn("Ошибка с нахождением GUI")
         return
     end
     
-    -- Удаляем старый GUI, если есть
+
     local existingGui = playerGui:FindFirstChild("MyScreenGui")
     if existingGui then
         existingGui:Destroy()
         
     end
     
-    -- Создаем ScreenGui
+
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "MyScreenGui"
     screenGui.Parent = playerGui
    
     
-    -- Создаем TextLabel
+
     local textLabel = Instance.new("TextLabel")
     textLabel.Text = "legacy hack v0.1"
     textLabel.Size = UDim2.new(0, 300, 0, 50)
@@ -38,9 +38,9 @@ local function createGUI()
     textLabel.BorderMode = Enum.BorderMode.Inset
     textLabel.Parent = screenGui
    
-    -- Цикл для переливания цветов
+
     local running = true
-    task.spawn(function()  -- Запускаем в отдельном потоке, чтобы не блокировать
+    task.spawn(function()
         while running do
             textLabel.TextColor3 = Color3.fromRGB(0, 255, 210)
             wait(0.4)
@@ -57,24 +57,24 @@ local function createGUI()
         end
     end)
     
-    -- Функция для остановки цикла при удалении GUI
+
     screenGui.Destroying:Connect(function()
         running = false
         
     end)
 end
 
--- Создаем GUI при первом запуске
+
 createGUI()
 
--- Пересоздаем GUI при каждом новом персонаже
+
 player.CharacterAdded:Connect(function(character)
     
     wait(1)  -- Небольшая задержка для загрузки
     createGUI()
 end)
 
--- Дополнительный цикл для проверки (на случай проблем с CharacterAdded)
+
 while true do
     wait(5)  -- Проверяем каждые 5 сек
     if not player.PlayerGui:FindFirstChild("MyScreenGui") then
